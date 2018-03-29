@@ -1,2 +1,2 @@
-# Pong-Clone-in-C-OpenGL-GLUT
+# Pong-Clone-in-CPP-OpenGL-GLUT
 A really simple Pong Clone programmed in Legacy OpenGL (I know, most of the methods have been depracated from modern OpenGL).
