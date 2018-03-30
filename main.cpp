@@ -42,8 +42,8 @@ double distance(double x1, double y1, double x2, double y2);
 /*Function prototypes end here*/
 
 // starting ball speed
-double xspeed = 0.0;
-double yspeed = 0.0;
+double xspeed = 0.01;
+double yspeed = -0.01;
 
 typedef struct Point2d
 {
@@ -59,6 +59,7 @@ double distance(double x1, double y1, double x2, double y2)
 
 void chooseSpeed()
 {
+	/**If you realy want to*/
 	char x[] = { 'a', 'b', 'c', 'd' };
 	int random = rand() % 4;
 	char choice = x[random];
@@ -93,6 +94,14 @@ Point2d p3 = { 0.3, -1.0 };
 // starting ball 
 Point2d b1 = { 0.0, 0.0 };
 double radius = 0.1;
+
+double randAdd()
+{
+	double i = 0, d = 0;
+	i = rand() % 1 + 0.01; //Gives a number between -20 and +20;
+	d = i / 100;
+	return d;
+}
 
 
 void initGL()
@@ -200,8 +209,8 @@ void collisionCheck()
 			{
 				if (b1.y <= p.y)
 				{
-					xspeed = -xspeed + 0.02;
-					yspeed = -yspeed + 0.02;
+					xspeed = -xspeed + randAdd() + 0.02;
+					yspeed = -yspeed + randAdd() + 0.02;
 				}
 			}
 		}
@@ -254,8 +263,6 @@ void idle()
 
 int main()
 {
-	srand(time(NULL));
-	chooseSpeed();
 	srand(time(NULL));
 	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(640, 480);
