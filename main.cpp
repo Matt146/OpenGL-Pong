@@ -1,4 +1,4 @@
-/*
+﻿/*
  *Author: Matt_146
  *Date: 3/28/18
  *Date Finished: 3/29/18
@@ -6,11 +6,31 @@
  *Objective: Create a Pong Clone in C++
  *License: NONE
  *Extra Notes: This code was made to be simple
- */
+ *Version 0.0.3
+*/
+
+/*
+██████╗  ██████╗ ███╗   ██╗ ██████╗      ██████╗██╗      ██████╗ ███╗   ██╗███████╗
+██╔══██╗██╔═══██╗████╗  ██║██╔════╝     ██╔════╝██║     ██╔═══██╗████╗  ██║██╔════╝
+██████╔╝██║   ██║██╔██╗ ██║██║  ███╗    ██║     ██║     ██║   ██║██╔██╗ ██║█████╗
+██╔═══╝ ██║   ██║██║╚██╗██║██║   ██║    ██║     ██║     ██║   ██║██║╚██╗██║██╔══╝
+██║     ╚██████╔╝██║ ╚████║╚██████╔╝    ╚██████╗███████╗╚██████╔╝██║ ╚████║███████╗
+╚═╝      ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝      ╚═════╝╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
+*/
+
+/*
+██╗   ██╗███████╗██████╗ ███████╗██╗ ██████╗ ███╗   ██╗     ██████╗     ██████╗    ██████╗
+██║   ██║██╔════╝██╔══██╗██╔════╝██║██╔═══██╗████╗  ██║    ██╔═████╗   ██╔═████╗   ╚════██╗
+██║   ██║█████╗  ██████╔╝███████╗██║██║   ██║██╔██╗ ██║    ██║██╔██║   ██║██╔██║    █████╔╝
+╚██╗ ██╔╝██╔══╝  ██╔══██╗╚════██║██║██║   ██║██║╚██╗██║    ████╔╝██║   ████╔╝██║    ╚═══██╗
+ ╚████╔╝ ███████╗██║  ██║███████║██║╚██████╔╝██║ ╚████║    ╚██████╔╝██╗╚██████╔╝██╗██████╔╝
+  ╚═══╝  ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝     ╚═════╝ ╚═╝ ╚═════╝ ╚═╝╚═════╝
+*/
 
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
 #include <math.h>
 #include <time.h>
 #include <ctime>
@@ -39,17 +59,26 @@ void collisionCheck();
 void moveBall(int frames, double unit, char axis);
 void chooseSpeed();
 double distance(double x1, double y1, double x2, double y2);
+void printGameover();
 /*Function prototypes end here*/
 
 // starting ball speed
 double xspeed = 0.01;
 double yspeed = -0.01;
 
+int score = 0;
+
 typedef struct Point2d
 {
 	double x;
 	double y;
 };
+
+void printGameOver()
+{
+	std::cout << "Game Over!" << std::endl;
+	std::cout << "Your score: " << score << std::endl;
+}
 
 double distance(double x1, double y1, double x2, double y2)
 {
@@ -198,7 +227,8 @@ void collisionCheck()
 	if (b1.y <= -1)
 	{
 		glutDestroyWindow(1);
-		Sleep(1000);
+		printGameOver();
+		Sleep(5000);
 		exit(0);
 	}
 	if (b1.x >= p.x)
@@ -209,15 +239,16 @@ void collisionCheck()
 			{
 				if (b1.y <= p.y)
 				{
-					xspeed = -xspeed + randAdd() + 0.02;
-					yspeed = -yspeed + randAdd() + 0.02;
+					xspeed = -xspeed + randAdd() + 0.01;
+					yspeed = -yspeed + randAdd() + 0.01;
+					score++;
 				}
 			}
 		}
 	}
 	moveBall(1, xspeed, 'x');
 	moveBall(1, yspeed, 'y');
-	Sleep(33.3333); // 30 fps
+	Sleep(20.3333); // ~40-50 fps
 	glFlush();
 }
 
@@ -264,6 +295,7 @@ void idle()
 int main()
 {
 	srand(time(NULL));
+	chooseSpeed();
 	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(640, 480);
 	glutCreateWindow("Pong in C++");
